@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Transfer</title>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+</head>
+<body>
+
+<form method="POST" th:action="@{/createTransaction}" th:object="${operation}">
+    Code: <input th:field="*{codeDest}" type="text"/><br/>
+    Amount: <input th:field="*{value}" step="10" type="number"/><br/>
+    Text <input th:field="*{text}" type="text"/><br/>
+    <input name="accId" th:value="${accountCode}" type="hidden"/>
+    <input type="submit" value="Send"/>
+</form>
+
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Account</title>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+</head>
+<body>
+
+<table th:if="${code!=''}">
+    <tr>
+        <th><p>Balance</p></th>
+        <th><p th:utext="${balance}"/></th>
+    </tr>
+</table>
+
+<a th:if="${code!=''}" th:href="@{|/transaction/${code}|}">Make transaction</a><br>
+<a th:if="${code!=''}" th:href="@{/accounts}">Back</a><br>
+
+<form method="GET" th:action="@{/operations}">
+    <fieldset>
+        <legend>Search operations</legend>
+        Code: <input name="code" type="text"/><br/>
+        Date: <input name="date" type="text"/><br/>
+        Type:
+        <select th:name="type">
+            <option value="transfer" selected>Transfer</option>
+            <option value="credit_card">Credit card</option>
+        </select><br/>
+        <input type="submit" value="Search"/>
+    </fieldset>
+
+</form>
+<br>
+<table>
+    <tr>
+        <th>Source</th>
+        <th>Destination</th>
+        <th>Amount</th>
+        <th>Date</th>
+        <th>Text</th>
+        <th>Type</th>
+    </tr>
+    <tr th:each="operationsList : ${operations}">
+        <td th:utext="${operationsList.codeSource}">...</td>
+        <td th:utext="${operationsList.codeDestination}">...</td>
+        <td th:utext="${operationsList.value}">...</td>
+        <td th:utext="${operationsList.date}">...</td>
+        <td th:utext="${operationsList.text}">...</td>
+        <td th:utext="${operationsList.type}">...</td>
+        <td>
+        </td>
+    </tr>
+</table>
+
+</body>
+</html>

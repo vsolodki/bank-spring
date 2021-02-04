@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Account list</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<header>
+    <h1>Account list</h1>
+</header>
+    <div th:class="styled-table">
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Code</th>
+            <th>Type</th>
+            <th>Fee</th>
+            <th>Interest</th>
+            <th>Modify</th>
+            <th>Details</th>
+            <th>Remove</th>
+        </tr>
+        <tr th:each="accountList : ${accounts}">
+            <td th:utext="${accountList.id}">...</td>
+            <td th:utext="${accountList.code}">...</td>
+            <form th:method="POST" th:action="@{/editAccount}">
+                <td><input name="type" th:value="${accountList.type}" type="text"/></td>
+                <td><input name="fee" th:value="${accountList.fee}" type="text"/></td>
+                <td><input name="interest" th:value="${accountList.interest}" type="text"/></td>
+                <input name="acid" th:value="${accountList.id}" type="hidden"/>
+                <td>
+                    <button type="submit">Modify</button>
+                </td>
+            </form>
+
+            <td>
+                <form th:method="get" th:action="@{/operations}">
+                    <input name="code" th:value="${accountList.code}" type="hidden"/>
+                    <button type="submit">Details</button>
+                </form>
+            </td>
+            <td>
+            <td>
+                <form th:method="delete" th:action="@{/removeAccount}">
+                    <input name="idd" th:value="${accountList.id}" type="hidden"/>
+                    <button type="submit">Remove</button>
+                </form>
+            </td>
+        </tr>
+    </table>
+</div>
+<div th:class="footer">
+    <form th:action="@{/addAccount}" method="POST">
+        <fieldset>
+            <legend>Create account</legend>
+            <select th:name="type">
+                <option value="Current" selected>Current</option>
+                <option value="Life Insurance">Life Insurance</option>
+                <option value="Life Savings">Life Savings</option>
+            </select><br/>
+            <input type="submit" value="Create"/>
+        </fieldset>
+    </form>
+</div>
+</body>
+</html>
